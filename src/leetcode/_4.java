@@ -1,5 +1,8 @@
 package leetcode;
 
+/*
+ * 两个有序数组的中位数
+ */
 public class _4 {
     // 未解出来
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
