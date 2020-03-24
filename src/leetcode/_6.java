@@ -1,7 +1,7 @@
 package leetcode;
 
 /*
- * Z型变化
+ * Z型变换
  * Z的两列之间的字符的下标，间距为gap = 2 * numRows - 2
  * 第一行的index为 it * gap
  * 中间行数，每次迭代都会有2个字符，index分别为it * gap - row 和it * gap + row

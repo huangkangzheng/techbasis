@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /*
- * 最长无重复子串问题
+ * 最长无重复子串问题（子串意味着连续）
  * 无重复选用HashSet
  * HashSet作为滑动窗口，i是left，j是right
  * 窗口前进：i不变j递增，若是无重复则放入set，记录max值
