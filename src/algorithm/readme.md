@@ -1,0 +1,1 @@
+leetcode solutions and some other interesting algorithm
