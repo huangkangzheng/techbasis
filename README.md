@@ -1,2 +1,2 @@
-# leetcode
-leetcode solution
+# tech basis
+tech basis
