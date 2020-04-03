@@ -1,5 +1,7 @@
 package algorithm.leetcode;
 
+import algorithm.ListNode;
+
 /*
  * 两两交换链表中的节点
  */

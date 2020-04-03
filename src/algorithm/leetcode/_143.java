@@ -1,5 +1,7 @@
 package algorithm.leetcode;
 
+import algorithm.ListNode;
+
 import java.util.*;
 
 /*
