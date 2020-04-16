@@ -52,6 +52,14 @@ HashSet的底层实现是HashMap，HashSet实际上就是HashMap.key（不重复
 
 TreeSet是有序无重队列，底层实现是TreeMap
 
+#### 2.1.3.Queue
+
+Quque：FIFO
+
+Dequeue：双向队列（双向链表）
+
+线程安全的Queue：LinkedBlockingQueue和ArrayBlockingQueue（参考3.5线程池）
+
 ### 2.2.Map
 
 #### 2.2.1.HashMap
@@ -198,9 +206,13 @@ ReentrantLock：
 
 Condition：
 
+公平锁：按照FIFO的规则获取锁
+
+非公平锁：先尝试抢占锁，如果被其他线程占用再进入队列
+
 ### 3.4.happens-before原则
 
-多个线程对于JV**共享资源**（如堆区中的对象）的访问是线程不安全的
+多个线程对于**共享资源**（如堆区中的对象）的访问是线程不安全的
 
 JVM的工作机制：每个线程拥有自己的线程栈和工作内存，共享资源存放在主存中，每次线程访问共享资源就是把主存中的变量拷贝到工作内存中，之后的读写操作都是在工作内存中，最后将工作内存的变量副本写回到主存中去，JMM定义了这种工作方式（volatile就是禁止线程复制共享资源到工作内存，所有线程都是直接从主存读，故而主存的修改所有线程都是立马可见的）
 
@@ -212,7 +224,7 @@ JVM的工作机制：每个线程拥有自己的线程栈和工作内存，共�
 
 内存系统的重排序：由于处理器使用缓存和读/写缓冲区，这使得加载和存储操作看上去可能是在乱序执行的
 
-happens-before原则：
+**happens-before原则：**
 
 程序顺序规则：一个线程中的每个操作，happens-before于该线程中的任意后续操作。
 
@@ -247,6 +259,26 @@ QueueCapacity：队列长度
 RejectHandler：拒绝策略，有abortPolicy（丢弃任务并抛异常），DiscardPolicy（丢弃任务但不抛异常），DiscardOldestPolicy（丢弃队列最前面的任务然后重新提交被拒绝的任务），CallerRunsPolicy（由调用线程执行该任务）
 
 KeepAliveSeconds：超过核心池大小（corePoolSize < x < maxPoolSize）之后新增的线程，空闲keepAliveSeconds之后就会被关闭
+
+LinkedBlockingQueue：
+
+​        LinkedBlockingQueue中的锁是分离的，生产者的锁PutLock，消费者的锁takeLock
+
+​        LinkedBlockingQueue内部维护的是一个链表结构，在生产和消费的时候，需要创建Node对象进行插入或移除，大批量数据的系统中，其对于GC的压力会比较大 
+
+​        LinkedBlockingQueue有默认的容量大小为：Integer.MAX_VALUE，当然也可以传入指定的容量大小
+
+​	LinkedBlockingQueue中使用了一个AtomicInteger对象来统计元素的个数
+
+ArrayBlockingQueue：
+
+​        ArrayBlockingQueue生产者和消费者使用的是同一把锁
+
+​        ArrayBlockingQueue内部维护了一个数组 ，在生产和消费的时候，是直接将枚举对象插入或移除的，不会产生或销毁任何额外的对象实例
+
+　　ArrayBlockingQueue在初始化的时候，必须传入一个容量大小的值
+
+ 　   ArrayBlockingQueue则使用int类型来统计元素 
 
 ### 3.6.Samphore，CountdownLatch，CyclicBarrier，ForkJoinPool
 
@@ -311,3 +343,8 @@ a. 线程以`LIFO`先进后出方式从本地队列获取任务，执行，直�
  c. 任务运行完成时，返回结果
 
 ## 4.JVM
+
+JVM内存模型
+
+![](..\..\resources\java基础\java内存模型.jpg)
+
